@@ -29,6 +29,14 @@ class App(tk.Tk):
         self._build_plans_section()
         self._build_opl_section()
         self._build_log()
+        self._bring_to_front()
+
+    def _bring_to_front(self):
+        # Terminalから起動した場合、macOSはウィンドウを自動で最前面に出さないことがあるため明示的に行う
+        self.lift()
+        self.attributes("-topmost", True)
+        self.after(300, lambda: self.attributes("-topmost", False))
+        self.focus_force()
 
     def _pick(self, key, is_save, filetypes):
         path = (filedialog.asksaveasfilename(filetypes=filetypes)
